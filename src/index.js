@@ -5,7 +5,6 @@ import {
   Scene,
   WebGLRenderer,
   Mesh,
-  TriangleStripDrawMode,
   BufferAttribute,
   BufferGeometry,
   ShaderMaterial,
@@ -36,10 +35,14 @@ void main() {
 }
 `;
 
-const renderer = new WebGLRenderer();
+const mainElement = document.getElementsByTagName('main')[0];
+const canvasElement = document.getElementsByTagName('canvas')[0];
+
+const renderer = new WebGLRenderer({
+  canvas: canvasElement,
+});
+
 renderer.autoClear = false;
-renderer.setSize(500, 500);
-document.body.appendChild(renderer.domElement);
 
 const boxGeometry = new BoxGeometry(1, 1, 1);
 const geometry = new ParametricGeometry(
@@ -125,6 +128,18 @@ camera.position.set(-0.6, 3.5, 0);
 camera.position.set(2.5, 2.5, 2.5);
 camera.lookAt(new Vector3(0, 0, 0));
 
+function resize() {
+  const box = mainElement.getBoundingClientRect();
+  const dpr = window.devicePixelRatio;
+  const width = box.width;
+  const height = box.height;
+  renderer.setSize(width, height);
+  renderer.devicePixelRatio = dpr;
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+}
+resize();
+
 const scene = new Scene();
 scene.add(mesh);
 
@@ -152,7 +167,7 @@ volumeScene.add(polygonMesh);
 
 const volumeMesh = new Mesh(new BoxGeometry(1, -1, -1), shadowMeshMaterial);
 volumeMesh.scale.y = 100;
-volumeMesh.position.set(0, 0, 0);
+volumeMesh.position.set(2, 0, 0);
 //volumeScene.add(volumeMesh);
 
 //const volumeMesh2 = new Mesh(boxGeometry, shadowMeshMaterial);
@@ -172,7 +187,7 @@ const gl = renderer.context;
 
 const stencilDefault = 0;
 
-function render() {
+function render(time) {
   requestAnimationFrame(render);
 
   renderer.clear(true, true, true);
@@ -250,6 +265,8 @@ function render() {
   renderVolumeZFail(volumeSceneRed);
   renderVolumeZFail(volumeScene);
 
-  //volumeMesh.rotation.y += 0.04;
+  mesh.rotation.y = time / 1000;
 }
 render();
+
+window.addEventListener('resize', resize);

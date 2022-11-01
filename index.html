@@ -1,5 +1,22 @@
 <!DOCTYPE html>
 <meta charset="UTF-8" />
 <body>
-  <script src="bundle.js"></script>
+  <style>
+    html, body {
+      padding: 0;
+      margin: 0;
+    }
+
+    main, body, canvas {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+  </style>
+  <main>
+    <canvas></canvas>
+  </main>
+  <script type="module" src="bundle.js"></script>
 </body>

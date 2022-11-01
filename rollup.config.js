@@ -5,7 +5,7 @@ export default {
   input: 'src/index.js',
   output: {
     file: 'bundle.js',
-    format: 'iife'
+    format: 'cjs'
   },
   plugins: [ resolve() ]
 };

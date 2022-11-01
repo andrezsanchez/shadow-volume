@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "three": "^0.100.0"
+    "three": "0.100"
   },
   "devDependencies": {
+    "http-server": "^14.1.1",
     "rollup": "^1.1.2",
     "rollup-plugin-node-resolve": "^4.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -c"
   },
   "author": "",
   "license": "ISC"
